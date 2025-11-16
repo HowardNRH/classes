@@ -1,7 +1,7 @@
 /*
   treeEx.cpp
   example of what a tree implementation might look like
-  Nick Howard Nov 14 2025
+  Nick Howard Nov 15 2025
 */
 
 #include <iostream>
@@ -26,12 +26,25 @@ void insertNode( TreePtr &t, int val );
 
 
 int main() {
+  int x;
   TreePtr root = NULL;
 
-  for ( int i = 0; i < 5; i++ )
-    insertNode( root, i );
+  for ( int i = 0; i < 8; i++ ) {
+    x = (rand() % 10) + 1;
+    cout << "adding: " << x << endl; 
+    insertNode( root, x );
+  }
 
+
+  cout << "\nPrinting In Order: " << endl;
   InorderPrint( root );
+
+  cout << "\nPrinting Pre Order: " << endl;
+  PreorderPrint( root );
+
+  cout << "\nPrinting Post Order: " << endl;
+  PostorderPrint( root );
+
   return 0;
 }
 
@@ -44,6 +57,22 @@ void InorderPrint( TreePtr t ) {
   }
 }
 
+void PreorderPrint( TreePtr t ) {
+  if ( t != NULL) {
+    cout << t->data << endl;
+    PreorderPrint( t->left );
+    PreorderPrint( t->right );
+  }
+}
+
+void PostorderPrint( TreePtr t ) {
+  if ( t != NULL) {
+    PostorderPrint( t->left );
+    PostorderPrint( t->right );
+    cout << t->data << endl;
+  }
+}
+
 TreePtr createNode( int data ) {
   TreePtr n = new TreeNode;
   n->data = data;
@@ -53,10 +82,8 @@ TreePtr createNode( int data ) {
 }
 
 void insertNode( TreePtr &t, int val ) {
-  if (t == NULL) {
-    cout << "adding " << val << endl;
+  if (t == NULL)
     t = createNode( val ); 
-  }
   else if ( val <= t->data )
     insertNode( t->left, val );
   else
