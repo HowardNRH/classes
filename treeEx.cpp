@@ -21,6 +21,7 @@ void PostorderPrint( TreePtr t );
 
 TreePtr createNode( int data );
 void insertNode( TreePtr &t, int val );
+bool isLeaf( TreePtr t );
 
 
 
@@ -45,9 +46,18 @@ int main() {
   cout << "\nPrinting Post Order: " << endl;
   PostorderPrint( root );
 
+  if (!isLeaf( root ))
+    cout << "root is not leaf" << endl;
+  if (isLeaf( root->left->right ))
+    cout << "root->left->right is a leaf" << endl;
+
   return 0;
 }
 
+
+bool isLeaf( TreePtr t ) {
+  return (t->left == NULL && t->right == NULL);
+}
 
 void InorderPrint( TreePtr t ) {
   if ( t != NULL) {
